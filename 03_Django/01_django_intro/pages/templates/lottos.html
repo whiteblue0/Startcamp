@@ -1,0 +1,16 @@
+<h1>
+    오늘의 로또 번호 추첨
+</h1>
+<hr>
+{% for lotto in lottos %}
+    <p>{{lotto}}</p>
+{% endfor %}
+
+<h2>
+    로또 번호 비교
+</h2>
+{% if lottos == real_lottos %}
+    <p>탈출</p>
+{% else %}
+    <p>갓삼성 충성충성 ^^7</p>
+{% endif %}

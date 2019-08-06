@@ -18,7 +18,18 @@ from django.urls import path
 from pages import views
 
 urlpatterns = [
-    path('student/<str:>', views.student)
+    path('user_create/', views.user_create),
+    path('user_new/', views.user_new),
+    path('result/', views.result),
+    path('art/',views.art),
+    path('pong/', views.pong),
+    path('ping/', views.ping),
+    path('catch/', views.catch),
+    path('throw/', views.throw),
+    path('lottos/', views.lottos),
+    path('ispal/<word>/', views.ispal),
+    path('isbirth/', views.isbirth),
+    path('student/<str:>', views.student),
     path('info/', views.info),
     path('template_language/', views.template_language),
     path('Circle/<int:r>/', views.Circle),
