@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<h1>ENW PAGE</h1>
+    <form action="/articles/create/" method="POST">
+        {% csrf_token %}
+        <label for="">Title</label><br>
+        <input type="text" id="title" name="title"><br>
+        <label for="">Content</label><br>
+        <textarea name="content" id="content" cols="30" rows="10"></textarea>
+        <input type="submit" value="글쓰기"><br>
+        <a href="/articles/">이전 페이지로</a>
+    </form>
+
+{% endblock %}

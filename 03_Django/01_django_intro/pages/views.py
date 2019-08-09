@@ -4,20 +4,20 @@ import random, requests
 
 # Create your views here.
 def index(request):
-    return render(request, 'index.html')
+    return render(request, 'pages/index.html')
 
 def introduce(request):
-    return render(request, 'introduce.html')
+    return render(request, 'pages/introduce.html')
 
 #2. Template Variable(탬플릿 변수)
 def dinner(request):
     menu = ['족발','햄버거','치킨','초밥']
     pick = random.choice(menu)
     context = {'pick':pick}
-    return render(request, 'dinner.html', context)
+    return render(request, 'pages/dinner.html', context)
 
 def images(request):
-    return render(request, 'images.html')
+    return render(request, 'pages/images.html')
 
 #3. Variable Routing(동적 라우팅)
 def hello(request, name, age):
@@ -29,7 +29,7 @@ def hello(request, name, age):
     'age':age,
     'pick':pick
     }
-    return render(request, 'hello.html', context)
+    return render(request, 'pages/hello.html', context)
 
 #4. 실습
 #4-1. 동적 라우팅을 활용해서(name과 age를 인자로 받아) 자기소개 페이지
@@ -39,7 +39,7 @@ def introduce_2(request, name, age):
     context = {'name':name,
     'age':age
     }
-    return render(request, 'introduce_2.html', context)
+    return render(request, 'pages/introduce_2.html', context)
 
 def mult(request, num1, num2):
     result = num1 * num2
@@ -48,7 +48,7 @@ def mult(request, num1, num2):
         'num2':num2,
         'result':result
     }
-    return render(request, 'mult.html', context)
+    return render(request, 'pages/mult.html', context)
 
 #4-3. 반지름(r)을 인자로 받아 원의 넓이(area)를 구하시오.
 def Circle(request, r):
@@ -57,7 +57,7 @@ def Circle(request, r):
         'area':area,
         'r':r
     }
-    return render(request, 'Circle.html', context)
+    return render(request, 'pages/Circle.html', context)
 
 #5. DTL(Django Template Language)
 def template_language(request):
@@ -74,7 +74,7 @@ def template_language(request):
         'datetimenow': datetimenow,
         'empty_list': empty_list
     }
-    return render(request, 'template_language.html', context)
+    return render(request, 'pages/template_language.html', context)
 
 #13workshop
 def info(request):
@@ -84,14 +84,14 @@ def info(request):
         'teacher': teacher,
         'students': students
     }
-    return render(request, 'info.html', context)
+    return render(request, 'pages/info.html', context)
 
 def student(request):
     students = ['홍길동', '김길동', '박길동']
     context = {
         'students': students,
     }
-    return render(request, 'student.html', context)
+    return render(request, 'pages/student.html', context)
 
 
 #6. 실습
@@ -109,7 +109,7 @@ def isbirth(request):
             'result':result
         }
 
-    return render(request, 'isbirth.html', context)
+    return render(request, 'pages/isbirth.html', context)
 
 #6-2. 회문판별(palindrome)
 def ispal(request, word):
@@ -121,7 +121,7 @@ def ispal(request, word):
         'word':word,
         'result':result
     }
-    return render(request, 'ispal.html', context)
+    return render(request, 'pages/ispal.html', context)
 
 #6-3. 로또 번호 추첨
 #lottos -> 1 ~ 45까지의 번호 중 6개를 랜덤으로 pick한 리스트
@@ -138,13 +138,13 @@ def lottos(request):
         'lottos': lottos,
     }
 
-    return render(request, 'lottos.html', context)
+    return render(request, 'pages/lottos.html', context)
 
 
 #7. Form - GET
 
 def throw(request):
-    return render(request, 'throw.html')
+    return render(request, 'pages/throw.html')
 
 def catch(request):
     message = request.GET.get('message')
@@ -153,10 +153,10 @@ def catch(request):
         'message':message,
         'message2':message2,
     }
-    return render(request, 'catch.html', context)
+    return render(request, 'pages/catch.html', context)
 
 def ping(request):
-    return render(request, 'ping.html')
+    return render(request, 'pages/ping.html')
 
 def pong(request):
     pong = request.GET.get('ping')
@@ -164,12 +164,12 @@ def pong(request):
         'pong':pong
     }
 
-    return render(request, 'pong.html', context)
+    return render(request, 'pages/pong.html', context)
 
 
 #7 Form - GET 실습(ascii artii)
 def art(request):
-    return render(request, 'art.html')
+    return render(request, 'pages/art.html')
 
 def result(request):
     word = request.GET.get('word')
@@ -186,11 +186,11 @@ def result(request):
         'result':result,
     }
 
-    return render(request, 'result.html', context)
+    return render(request, 'pages/result.html', context)
 
 #9. Form - POST
 def user_new(request):
-    return render(request, 'user_new.html')
+    return render(request, 'pages/user_new.html')
 
 def user_create(request):
     name = request.POST.get('name')
@@ -200,4 +200,8 @@ def user_create(request):
         'password':pwd
     }
 
-    return render(request, 'user_create.html', context)
+    return render(request, 'pages/user_create.html', context)
+
+#10. 정적 파일
+def static_example(request):
+    return render(request, 'pages/static_example.html')
