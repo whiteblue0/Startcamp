@@ -3,6 +3,8 @@ from .models import Job
 from faker import Faker
 from decouple import config
 import requests
+from pprint import pprint
+from IPython import embed
 
 # Create your views here.
 def index(request):
@@ -24,14 +26,33 @@ def past_life(request):
     #api key 가져오기
     GIPHY_API_KEY = config('GIPHY_API_KEY')
     # 요청 url 세팅
-    url = f'http://api.giphy.com/v1/gifs/search?api_key={GIPHY_API_KEY}&q={past_job}&limit=8&lang=ko'
+    url = f'http://api.giphy.com/v1/gifs/search?api_key={GIPHY_API_KEY}&q={past_job}&limit=1&lang=ko'
     #요청 보내기
     data = requests.get(url).json()
+    # print(data)
+    # embed()
     # image 추출
     try:
         image = data.get('data')[0].get('images').get('original').get('url')
     except IndexError:
         image = None
+    
+    #naver image
+    #1. 요청 헤더 정보 준비
+    NAVER_ID = config('NAVER_ID')
+    NAVER_SECRET = config('NAVER_SECRET')
+    headers = {
+        'X-Naver-Client-Id':NAVER_ID,
+        'X-Naver-Client-Secret':NAVER_SECRET
+    }
+    #2. url 요청
+    naver_url = f'https://openapi.naver.com/v1/search/image?query={past_job}&filter=medium&display=1'
 
-    context = {'person': person}
+    #3. 실제 요청 보내기
+    naver_data = requests.get(naver_url, headers=headers).json()
+    # pprint(naver_data)
+    #4. 이미지 링크 추출
+    naver_image = naver_data.get('items')[0].get('link')
+    # print(naver_image)
+    context = {'person': person, 'image':image,'naver_image':naver_image}
     return render(request, 'jobs/past_life.html', context)
