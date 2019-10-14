@@ -20,8 +20,8 @@ def create(request):
     if request.method == 'POST':
         title = request.POST.get('title')
         content = request.POST.get('content')
-        article = Article(title=title, content=content)
-        article.full_clean()
+        image = request.FILES.get('image')
+        article = Article(title=title, content=content, image=image)
         article.save()
         return redirect('articles:detail', article.pk)
     else:
@@ -94,3 +94,13 @@ def comments_delete(request,article_pk,comment_pk):
         comment = Comment.objects.get(pk=comment_pk)
         comment.delete()
     return redirect('articles:detail', article_pk)
+
+def comments_update(request, article_pk,comment_pk):
+    comment = Comment.objects.get(pk=comment_pk)
+    if request.method == 'POST':
+        comment.content = request.POST.get('content')
+        comment.save()
+        return redirect('articles:detail', article_pk)
+    else:
+        context = {'comment':comment}
+        return render(request, 'articles/comment_update.html',context)
