@@ -1,0 +1,16 @@
+{% extends 'articles/base.html' %}
+{% block body %}
+    <h2>DETAIL</h2>
+    <hr>
+    <p>글 번호: {{ article.pk }}</p>
+    <p>글 제목: {{ article.title }}</p>
+    <p>글 내용: {{ article.content }}</p>
+    <p>작성시간: {{ article.created_at|date:"SHORT_DATE_FORMAT" }}</p>
+    <p>마지막 수정시간: {{ article.updated_at|date:"M,j,Y" }}</p>
+    <hr>
+    <form action="{% url 'articles:delete' article.pk %}" method="post">
+        {% csrf_token %}
+        <input type="submit" value="글 삭제">
+    </form>
+    <a href="{% url 'articles:index' %}">[메인 페이지로]</a>
+{% endblock %}
