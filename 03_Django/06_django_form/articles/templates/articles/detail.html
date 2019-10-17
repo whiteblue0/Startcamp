@@ -12,5 +12,28 @@
         {% csrf_token %}
         <input type="submit" value="글 삭제">
     </form>
+    <hr>
+    <p><b>댓글 목록({{ comments.count }}개의 댓글)</b></p>
+    <p><b></b></p>
+    {% for comment in article.comments.all %}
+        <div>    
+            <!-- <p> 댓글 번호: {{ comment.pk }}</p> -->
+            <p> 댓글{{ forloop.revcounter }}: {{ comment.content }}</p>
+            <form action="{% url 'articles:comments_delete' article.pk comment.pk %}" method="POST">
+                {% csrf_token %}
+                <input type="submit" value="댓글 삭제">
+            </form>
+        </div>
+        <br>
+        {% empty %}
+        <p>댓글이 없습니다.</p>
+
+    {% endfor %}
+    <form action="{% url 'articles:comments_create' article.pk %}" method="POST">
+        {% csrf_token %}
+        {{ commentform.as_p }}
+        <input type="submit" value="댓글 달기">
+    </form>
+    <a href="{% url 'articles:update' article.pk %}">[글 수정]</a>
     <a href="{% url 'articles:index' %}">[메인 페이지로]</a>
 {% endblock %}
