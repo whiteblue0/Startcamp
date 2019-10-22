@@ -8,32 +8,49 @@
     <p>작성시간: {{ article.created_at|date:"SHORT_DATE_FORMAT" }}</p>
     <p>마지막 수정시간: {{ article.updated_at|date:"M,j,Y" }}</p>
     <hr>
+    {% if request.user == article.user %}
     <form action="{% url 'articles:delete' article.pk %}" method="post">
         {% csrf_token %}
         <input type="submit" value="글 삭제">
     </form>
+    <form action="{% url 'articles:update' article.pk %}" method="post">
+        {% csrf_token %}
+        <input type="submit" value="글 수정">
+    </form>
+    {% else %}
+    {% endif %}
     <hr>
     <p><b>댓글 목록({{ comments.count }}개의 댓글)</b></p>
     <p><b></b></p>
     {% for comment in article.comments.all %}
         <div>    
             <!-- <p> 댓글 번호: {{ comment.pk }}</p> -->
+            <p>댓글 작성자: {{ comment.user }}</p>
             <p> 댓글{{ forloop.revcounter }}: {{ comment.content }}</p>
+            {% if request.user == comment.user %}
             <form action="{% url 'articles:comments_delete' article.pk comment.pk %}" method="POST">
                 {% csrf_token %}
                 <input type="submit" value="댓글 삭제">
             </form>
+            {% endif %}
         </div>
         <br>
         {% empty %}
         <p>댓글이 없습니다.</p>
 
     {% endfor %}
+    {% if user.is_authenticated %}
     <form action="{% url 'articles:comments_create' article.pk %}" method="POST">
         {% csrf_token %}
         {{ commentform.as_p }}
         <input type="submit" value="댓글 달기">
     </form>
+    {% else %}
+    <a href="{% url 'accounts:login' %}">[댓글을 작성하려면 로그인 해주세요]</a>
+    {% endif %}
+    <br>
+    {% if request.user == article.user %}
     <a href="{% url 'articles:update' article.pk %}">[글 수정]</a>
+    {% endif %}
     <a href="{% url 'articles:index' %}">[메인 페이지로]</a>
 {% endblock %}
