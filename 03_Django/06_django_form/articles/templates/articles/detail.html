@@ -2,6 +2,8 @@
 {% block body %}
     <h2>DETAIL</h2>
     <hr>
+    {% include 'articles/_follow.html' %}
+    <hr>
     <p>글 번호: {{ article.pk }}</p>
     <p>글 제목: {{ article.title }}</p>
     <p>글 내용: {{ article.content }}</p>
@@ -13,9 +15,6 @@
         {% csrf_token %}
         <input type="submit" value="글 삭제">
     </form>
-    <form action="{% url 'articles:update' article.pk %}" method="post">
-        {% csrf_token %}
-        <input type="submit" value="글 수정">
     </form>
     {% else %}
     {% endif %}

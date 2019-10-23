@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth import get_user_model
 from .models import Article,Comment
 from .forms import ArticleForm, CommentForm
 from django.views.decorators.http import require_POST
@@ -56,7 +57,12 @@ def detail(request,article_pk):
     article = Article.objects.get(pk=article_pk)
     commentform = CommentForm()
     comments = article.comments.all()
-    context = {'article':article, 'commentform': commentform, 'comments': comments,}
+    person = get_object_or_404(get_user_model(), pk=article.user.pk)
+    context = {'article':article, 
+    'commentform': commentform, 
+    'comments': comments,
+    'person': person
+    }
     return render(request, 'articles/detail.html', context)
 
 @require_POST
@@ -118,4 +124,27 @@ def comments_delete(request,article_pk,comment_pk):
         comment = get_object_or_404(Comment, pk=comment_pk)
         if comment.user == request.user:
             comment.delete()
+    return redirect('articles:detail', article_pk)
+
+@login_required
+def like(request, article_pk):
+    article = get_object_or_404(Article, pk=article_pk)
+    user = request.user
+
+    if article.like_users.filter(pk=user.pk).exists():
+        article.like_users.remove(user)
+    else:
+        article.like_users.add(user)
+    return redirect('articles:index')
+
+
+@login_required
+def follow(request, article_pk, user_pk):
+    person = get_object_or_404(get_user_model(), pk=user_pk)
+    user = request.user
+
+    if person.followers.filter(pk=user.pk).exists():
+        person.followers.remove(user)
+    else:
+        person.followers.add(user)
     return redirect('articles:detail', article_pk)
