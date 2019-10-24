@@ -10,9 +10,10 @@ urlpatterns = [
     path('<int:article_pk>/delete/', views.delete, name='delete'),
     path('<int:article_pk>/update/', views.update, name='update'),
     path('<int:article_pk>/comments/', views.comments_create, name='comments_create'),
-    path('<int:article_pk>/comments/<int:comment_pk>', views.comments_delete, name='comments_delete'),
-    path('<int:article_pk>/like', views.like, name='like'),
-    path('<int:article_pk>>/<int:user_pk>', views.follow, name='follow'),
-
+    path('<int:article_pk>/comments/<int:comment_pk>/', views.comments_delete, name='comments_delete'),
+    path('<int:article_pk>/like/', views.like, name='like'),
+    path('<int:article_pk>>/<int:user_pk>/', views.follow, name='follow'),
+    path('<int:hash_pk>/hashtag/', views.hashtag, name='hashtag'),
+    
 ]
 

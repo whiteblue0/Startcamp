@@ -1,4 +1,6 @@
 {% extends 'articles/base.html' %}
+{%  load make_link %}
+
 {% block body %}
     <h2>DETAIL</h2>
     <hr>
@@ -6,7 +8,7 @@
     <hr>
     <p>글 번호: {{ article.pk }}</p>
     <p>글 제목: {{ article.title }}</p>
-    <p>글 내용: {{ article.content }}</p>
+    <p>글 내용: {{ article|hashtag_link|safe }}</p>
     <p>작성시간: {{ article.created_at|date:"SHORT_DATE_FORMAT" }}</p>
     <p>마지막 수정시간: {{ article.updated_at|date:"M,j,Y" }}</p>
     <hr>
