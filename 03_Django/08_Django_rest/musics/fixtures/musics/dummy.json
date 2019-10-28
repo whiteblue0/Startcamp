@@ -1,0 +1,112 @@
+[
+{
+  "model": "musics.artist",
+  "pk": 1,
+  "fields": {
+    "name": "10cm"
+  }
+},
+{
+  "model": "musics.artist",
+  "pk": 2,
+  "fields": {
+    "name": "\uc5d0\ud53c\ud1a4\ud504\ub85c\uc81d\ud2b8"
+  }
+},
+{
+  "model": "musics.music",
+  "pk": 1,
+  "fields": {
+    "artist": 1,
+    "title": "\uc544\uba54\ub9ac\uce74\ub178"
+  }
+},
+{
+  "model": "musics.music",
+  "pk": 2,
+  "fields": {
+    "artist": 1,
+    "title": "\uc9dd\uc0ac\ub791"
+  }
+},
+{
+  "model": "musics.music",
+  "pk": 3,
+  "fields": {
+    "artist": 2,
+    "title": "\ubd04\ub0a0 \ubc9a\uaf43,\uadf8\ub9ac\uace0 \ub108"
+  }
+},
+{
+  "model": "musics.music",
+  "pk": 4,
+  "fields": {
+    "artist": 2,
+    "title": "\uc720\ucc44\uaf43"
+  }
+},
+{
+  "model": "musics.comment",
+  "pk": 1,
+  "fields": {
+    "music": 1,
+    "content": "\ud55c\uc794 \ud5c8\uc274?"
+  }
+},
+{
+  "model": "musics.comment",
+  "pk": 2,
+  "fields": {
+    "music": 2,
+    "content": "\ub178\ub798\ub294 \uc88b\ub124"
+  }
+},
+{
+  "model": "musics.comment",
+  "pk": 3,
+  "fields": {
+    "music": 3,
+    "content": "\ubc9a\uaf43\uc774 \ubc14\ub78c\uc5d0 \ud769\ub0a0\ub9ac\ub294 \ub178\ub798"
+  }
+},
+{
+  "model": "musics.comment",
+  "pk": 4,
+  "fields": {
+    "music": 4,
+    "content": "\uc81c\uc8fc\ub3c4 \uac00\uace0\uc2f6\ub2e4!"
+  }
+},
+{
+  "model": "musics.comment",
+  "pk": 5,
+  "fields": {
+    "music": 1,
+    "content": "\uc544\uba54 \uc544\uba54 \uc544\uba54~"
+  }
+},
+{
+  "model": "musics.comment",
+  "pk": 6,
+  "fields": {
+    "music": 2,
+    "content": "\uc9dd\uc0ac\ub791 \ub178\ub798\uc911\uc5d0 \ucd5c\uace0"
+  }
+},
+{
+  "model": "musics.comment",
+  "pk": 7,
+  "fields": {
+    "music": 3,
+    "content": "\uc794\uc794\ud558\uace0 \uc88b\uc544\uc694"
+  }
+},
+{
+  "model": "musics.comment",
+  "pk": 8,
+  "fields": {
+    "music": 4,
+    "content": "\uc5d0\ud53c\ud1a4\uc2a4\ub7ec\uc6b4 \ub178\ub798!"
+  }
+}
+]
