@@ -15,9 +15,9 @@
 4. 최종 출력
 */
 // let
-console.log(b)
-let b = 10
-console.log(b)
+// console.log(b)
+// let b = 10
+// console.log(b)
 /* let 이 hoisting 되는 과정
 2. 에러
 3. 할당
@@ -35,3 +35,27 @@ console.log(b)
 // 4. 할당
 
 
+// let foo
+// let bar = undefined
+
+// console.log(foo)
+// console.log(bar)
+
+// y 
+// var y = 1
+
+if (x !== 1){
+  console.log(y)
+  var y= 3
+  if (y === 3){
+    var x = 1
+  }
+  console.log(y)
+}
+
+if (x === 1){
+  console.log(y)
+}
+
+x = 7
+console.log(x)
