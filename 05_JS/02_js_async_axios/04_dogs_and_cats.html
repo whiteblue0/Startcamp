@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    img {
+      width: 300px;
+      height: 300px;
+    }
+  </style>
+</head>
+<body>
+  <h1>댕댕이</h1>
+  <div class="animals">
+  <button id="dog">댕댕이 생성</button>
+
+  </div>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script>
+    // axios로 get요청 보냄
+    const getDogImage = () => {
+      axios.get('https://dog.ceo/api/breeds/image/random')
+      // 응답이 오면 코드실행
+      .then(res => {
+        // 이미지를 imgUrl에 저장
+        const imgUrl = res.data.message
+        // 이미지 태그 작성
+        const imgTag = document.createElement('img')
+        // 이미지 태그의 src 속성에 imgUrl 넣는다.
+        imgTag.src = imgUrl
+        // 원하는 위치에 이미지 넣기
+        document.querySelector('.animals').append(imgTag)
+      })
+      .catch(err => console.log(err))
+    }
+      const dogButton = document.querySelector('#dog')
+      dogButton.addEventListener('click',getDogImage)
+  </script>
+</body>
+</html>

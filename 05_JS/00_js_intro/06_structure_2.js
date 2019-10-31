@@ -280,7 +280,6 @@ const USERS = [
 const user = USERS.find(user => user.name === 'Tony stark')
 
 console.log(user)
-*/
 
 
 // 6. some & every
@@ -301,3 +300,39 @@ const result2 = arr.every(elem => elem %2 === 0)
 console.log(result2)
 
 
+// find Ex1
+// PEOPLE 중에 admin 권한을 가진 요소를 찾아서 admin 상수에 저장해보자
+
+const PEOPLE =[
+  {id:1, admin: false},
+  {id:2, admin: false},
+  {id:3, admin: true},
+]
+
+const admin = PEOPLE.find(person => person.admin === true)
+console.log(admin)
+
+*/
+
+
+
+// // some & every Ex1
+
+const COMPUTERS = [
+  {name:'macbook', ram:16 },
+  {name:'gram', ram:8 },
+  {name:'series9', ram:32 },
+]
+
+// some
+const someComputersAvailable = COMPUTERS.some(function(computer){
+  return computer.ram > 16
+})
+
+console.log(someComputersAvailable)
+
+const everyComputersAvailable = COMPUTERS.every(function(computer){
+  return computer.ram > 16
+})
+
+console.log(everyComputersAvailable)
