@@ -5,55 +5,135 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Document</title>
+  <style>
+    .completed {
+      text-decoration: line-through;
+      opacity: 0.6;
+    }
+  </style>
 </head>
 <body>
   <div id ="app">
-    <li v-for="todo in todos" v-if="!todo.completed" v-on:click="check(todo)">
-        {{ todo.content }}
+    <!-- <div v-bind:style="{ color:activeColor, fontsize: fontSize + 'px' }">
+      Styling color
+    </div> -->
+    <select v-model="status">
+      <option value="all">all</option>
+      <option value="active">active</option>
+      <option value="completed">completed</option>
+    </select>
+<!-- key는 Vue 각각의 노드에(HTML, element)) 대해 고유한 ID를 지정할 때 사용 -->
+
+    <li v-for="todo in computedTodosByStatus" v-bind:class="{ completed: todo.completed }" v-bind:key="todo.id">
+      <input type="checkbox" v-model="todo.completed">  
+      <span>{{ todo.content }}</span>
     </li>
-    <li v-else v-on:click="check(todo)">[완료!]</li>
     <div>
         <input type="text" v-model="newTodo" v-on:keyup.enter="addTodo">
+        <button v-on:click="addTodo">+</button>
     </div>
   </div>
+  <footer>
+    <button v-on:click="clearCompleted">Clear Completed</button>
+  </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
   <script>
+    const STORAGE_KEY = 'vue-todos'
+    const todoStorage = {
+      fetch: function() {
+        // parse: String -> JSON
+        return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]')
+      },
+
+      save: function(todos) {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(todos))
+      },
+    }
     const app = new Vue({
       el: '#app',
       data: {
+        // activeColor: 'red',
+        // fontSize: 20,
         todos: [
           {
+          id:1,
           content: '점심메뉴 고민하기',
           completed: true,
           },
           {
+          id:2,
           content: '사다리 타기',
           completed: false,
           },
           {
+          id:3,
           content: '약속의 2시, 낮잠을 자자',
           completed: false,
           },
           {
+          id:4,
           content: '야자하기',
           completed: false,
           },
         ],
         newTodo : '',
+        status: 'all', // all, active(완료되지 않은 일), completed(완료된 일)
       },
       methods: {
           check: function(todo) {
             todo.completed = !todo.completed
           },
           addTodo: function() {
-            this.todos.push({
-              content: this.newTodo,
-              completed: false,
+            if (this.newTodo.length !== 0) {
+              this.todos.push({
+                id: Date.now(),
+                content: this.newTodo,
+                completed: false,
             })
             this.newTodo = ''
-          }
-        }
+            }
+          },
+          clearCompleted: function() {
+            const notCompletedTodos = this.todos.filter((todo) => {
+              return !todo.completed
+            })
+            this.todos = notCompletedTodos
+          },
+        },
+      computed: {
+        computedTodosByStatus: function() {
+          if (this.status === 'active') {
+              return this.todos.filter((todo) => {
+                return !todo.completed
+              })
+            }
+            // 완료된 일(complted)
+            if (this.status === 'completed') {
+              return this.todos.filter((todo) => {
+                return todo.completed
+              })
+            }
+            // 모두
+            return this.todos
+        },
+      },
+      // watch: vue 인스턴스의 data 변화를 관찰하고 이에 반응
+      // 데이터 변경에 대한 응답을 비동기식 또는 시간이 많이 소요되는 조작을 수행할 때 적합
+      watch: {
+        todos: {
+          // handler 특징: 특정 데이터가 변경되었을 때 그걸 관찰하고 있다가 변경사항이 생기면
+          // 실행할 함수
+          handler: function(todos) {
+            todoStorage.save(todos)
+          },
+        },
+        // deep: Object의 nested items의  관찰 유무 설정
+        deep: true,
+      },
+      mounted: function() {
+          this.todos = todoStorage.fetch()
+      },
     })
   </script>
 </body>
